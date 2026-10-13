@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StockSphere WMS — Warehouse Management Service</title>
+  <meta name="description" content="StockSphere WMS: real-time inventory, inbound, putaway, picking and dispatch for growing businesses. Built by Preetam Devanda.">
+  <meta name="author" content="Preetam Devanda">
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJTdG9ja1NwaGVyZSBsb2dvIj4KICA8cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0iIzBhNmVkMSIvPgogIDxwYXRoIGQ9Ik0xMCAyNiAzMiAxMmwyMiAxNHYyNmEyIDIgMCAwIDEtMiAySDEyYTIgMiAwIDAgMS0yLTJ6IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuOTUiLz4KICA8ZyBmaWxsPSIjMGExZjMzIj48cmVjdCB4PSIxNyIgeT0iMzAiIHdpZHRoPSIxMiIgaGVpZ2h0PSI4IiByeD0iMSIvPjxyZWN0IHg9IjM1IiB5PSIzMCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjgiIHJ4PSIxIi8+PHJlY3QgeD0iMTciIHk9IjQyIiB3aWR0aD0iMTIiIGhlaWdodD0iOCIgcng9IjEiLz48L2c+CiAgPHJlY3QgeD0iMzUiIHk9IjQyIiB3aWR0aD0iMTIiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNmMmE5MDAiLz4KPC9zdmc+Cg==" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+/* ==========================================================================
+   StockSphere WMS — Warehouse Management Service
+   Enterprise-grade UI stylesheet (SAP Fiori / EWM-inspired design language)
+
+   Owner   : Preetam Devanda
+   Email   : preetam.devanda_mba25@gsv.ac.in
+   Mobile  : +91 7610845387
+   Course  : ITBT Live Class Exercise — Build a Digital Business App
+   ========================================================================== */
+
+/* ---------- 1. Design tokens ---------- */
+:root {
+  /* Brand */
+  --ink-900: #0a1f33;
+  --ink-800: #102a43;
+  --ink-700: #1c3d5a;
+  --ink-600: #2c5278;
+  --blue-600: #0a6ed1;          /* primary action */
+  --blue-700: #0854a0;
+  --blue-100: #e5f0fa;
+  --amber-500: #f2a900;         /* warehouse safety accent */
+  --amber-100: #fff4d6;
+
+  /* Surfaces */
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --line: #d9e0e8;
+  --line-strong: #b9c4d0;
+
+  /* Text */
+  --text: #1a2a3a;
+  --text-soft: #50647a;
+  --text-faint: #7a8ba0;
+  --text-on-dark: #eaf1f8;
+
+  /* Semantic (SAP-style object status) */
+  --ok: #107e3e;      --ok-bg: #e6f4ea;
+  --warn: #b25e00;    --warn-bg: #fff1dc;
+  --bad: #bb0000;     --bad-bg: #fde8e8;
+  --info: #0a6ed1;    --info-bg: #e5f0fa;
+  --idle: #5b6b7c;    --idle-bg: #eceff3;
+
+  /* Type */
+  --font-ui: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fs-xs: .75rem;  --fs-sm: .8125rem; --fs-md: .9375rem;
+  --fs-lg: 1.125rem; --fs-xl: 1.5rem;  --fs-2xl: clamp(1.9rem, 3.4vw, 2.75rem);
+  --fs-hero: clamp(2.2rem, 5vw, 3.9rem);
+
+  /* Space / shape */
+  --s1: .25rem; --s2: .5rem; --s3: .75rem; --s4: 1rem;
+  --s5: 1.5rem; --s6: 2rem; --s7: 3rem; --s8: 4.5rem;
+  --r-sm: 4px; --r-md: 8px; --r-lg: 14px; --r-pill: 999px;
+  --shadow-1: 0 1px 2px rgba(10,31,51,.08), 0 0 0 1px rgba(10,31,51,.04);
+  --shadow-2: 0 4px 14px rgba(10,31,51,.10), 0 0 0 1px rgba(10,31,51,.05);
+  --shadow-3: 0 16px 40px rgba(10,31,51,.18);
+  --shell-h: 56px;
+  --container: 1240px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+
+  /* Bin-occupancy scale (heat map) */
+  --occ-0: #e9eef4; --occ-1: #cfe3f6; --occ-2: #8fc0ea;
+  --occ-3: #3f8fdc; --occ-4: #0a5cb0; --occ-5: #f2a900; --occ-x: #bb0000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1622; --surface: #12212f; --surface-2: #162838;
+    --line: #243a4e; --line-strong: #34506a;
+    --text: #e6eef6; --text-soft: #a3b6c8; --text-faint: #7b92a8;
+    --blue-600: #4aa3f0; --blue-700: #78bbf5; --blue-100: #123552;
+    --amber-100: #3a2f0c;
+    --ok: #5fd08a; --ok-bg: #12331f; --warn: #ffb454; --warn-bg: #3a2a10;
+    --bad: #ff7b7b; --bad-bg: #3d1a1a; --info: #6db6f5; --info-bg: #12304a;
+    --idle: #9fb0c1; --idle-bg: #1d2e3e;
+    --occ-0: #1b2c3b; --occ-1: #1f4466; --occ-2: #22659a;
+    --occ-3: #2f8be0; --occ-4: #6db6f5;
+    --shadow-1: 0 1px 2px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.04);
+    --shadow-2: 0 4px 14px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.05);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1622; --surface: #12212f; --surface-2: #162838;
+  --line: #243a4e; --line-strong: #34506a;
+  --text: #e6eef6; --text-soft: #a3b6c8; --text-faint: #7b92a8;
+  --blue-600: #4aa3f0; --blue-700: #78bbf5; --blue-100: #123552;
+  --amber-100: #3a2f0c;
+  --ok: #5fd08a; --ok-bg: #12331f; --warn: #ffb454; --warn-bg: #3a2a10;
+  --bad: #ff7b7b; --bad-bg: #3d1a1a; --info: #6db6f5; --info-bg: #12304a;
+  --idle: #9fb0c1; --idle-bg: #1d2e3e;
+  --occ-0: #1b2c3b; --occ-1: #1f4466; --occ-2: #22659a;
+  --occ-3: #2f8be0; --occ-4: #6db6f5;
+  --shadow-1: 0 1px 2px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.04);
+  --shadow-2: 0 4px 14px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.05);
+}
+
+/* ---------- 2. Reset & base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--shell-h) + 12px); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: var(--font-ui); font-size: var(--fs-md); line-height: 1.6;
+  font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg, canvas { max-width: 100%; display: block; }
+h1, h2, h3, h4 { margin: 0 0 var(--s3); line-height: 1.2; font-weight: 600; letter-spacing: -.01em; color: var(--text); }
+p { margin: 0 0 var(--s4); max-width: 68ch; }
+a { color: var(--blue-600); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--blue-700); }
+ul { margin: 0; padding: 0; list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+::selection { background: var(--amber-500); color: #000; }
+:focus-visible { outline: 3px solid var(--amber-500); outline-offset: 2px; border-radius: var(--r-sm); }
+.sr-only { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip-link { position: absolute; left: -999px; top: 8px; background: var(--amber-500); color: #000; padding: var(--s2) var(--s4); z-index: 999; border-radius: var(--r-sm); }
+.skip-link:focus { left: 8px; }
+
+/* ---------- 3. Layout ---------- */
+.container { width: min(100% - 2rem, var(--container)); margin-inline: auto; }
+.section { padding-block: var(--s8); }
+.section--alt { background: var(--surface); border-block: 1px solid var(--line); }
+.section__head { max-width: 760px; margin-bottom: var(--s6); }
+.section__head h2 { font-size: var(--fs-2xl); }
+.section__head p { color: var(--text-soft); font-size: var(--fs-lg); }
+.grid { display: grid; gap: var(--s5); }
+.grid--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.grid--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.grid--4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
+.stack > * + * { margin-top: var(--s4); }
+.row { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: center; }
+
+/* ---------- 4. Shell bar (SAP Fiori-style top bar) ---------- */
+.shell {
+  position: sticky; top: 0; z-index: 100; height: var(--shell-h);
+  background: var(--ink-900); color: var(--text-on-dark);
+  border-bottom: 3px solid var(--amber-500);
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+.shell__inner { height: 100%; display: flex; align-items: center; gap: var(--s5); }
+.brand { display: flex; align-items: center; gap: var(--s3); color: inherit; text-decoration: none; font-weight: 600; font-size: var(--fs-lg); white-space: nowrap; }
+.brand:hover { color: #fff; }
+.brand img, .brand svg { width: 32px; height: 32px; }
+.brand small { display: block; font-size: var(--fs-xs); font-weight: 400; color: #9db4cb; line-height: 1; margin-top: 2px; }
+.nav { display: flex; gap: var(--s1); margin-left: var(--s4); }
+.nav a {
+  color: #c9d8e6; text-decoration: none; padding: .45rem .8rem; border-radius: var(--r-sm);
+  font-size: var(--fs-sm); font-weight: 500; position: relative; transition: background .15s var(--ease), color .15s;
+}
+.nav a:hover { background: rgba(255,255,255,.08); color: #fff; }
+.nav a[aria-current="true"], .nav a.is-active { color: #fff; background: rgba(255,255,255,.12); }
+.nav a.is-active::after { content: ""; position: absolute; left: .8rem; right: .8rem; bottom: -9px; height: 3px; background: var(--amber-500); }
+.shell__tools { margin-left: auto; display: flex; align-items: center; gap: var(--s3); }
+.shell__search {
+  display: flex; align-items: center; gap: var(--s2); background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14); border-radius: var(--r-pill); padding: .3rem .9rem; width: 230px;
+}
+.shell__search input { background: none; border: 0; outline: 0; color: #fff; width: 100%; font-size: var(--fs-sm); }
+.shell__search input::placeholder { color: #8fa7bf; }
+.shell__search:focus-within { background: rgba(255,255,255,.14); border-color: var(--amber-500); }
+.icon-btn {
+  width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%;
+  border: 0; background: transparent; color: #c9d8e6; cursor: pointer; transition: background .15s;
+}
+.icon-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--amber-500); color: #1a1200; font-weight: 700; font-size: var(--fs-sm);
+}
+.menu-toggle { display: none; }
+
+/* ---------- 5. Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  padding: .65rem 1.25rem; border-radius: var(--r-md); border: 1px solid transparent;
+  font-weight: 600; font-size: var(--fs-md); text-decoration: none; cursor: pointer;
+  transition: transform .12s var(--ease), background .15s, box-shadow .15s, border-color .15s;
+}
+.btn:active { transform: translateY(1px); }
+.btn--primary { background: var(--blue-600); color: #fff; box-shadow: 0 1px 0 rgba(255,255,255,.2) inset, var(--shadow-1); }
+.btn--primary:hover { background: var(--blue-700); color: #fff; }
+.btn--accent { background: var(--amber-500); color: #1a1200; }
+.btn--accent:hover { background: #ffbb1f; color: #1a1200; }
+.btn--ghost { background: transparent; border-color: var(--line-strong); color: var(--text); }
+.btn--ghost:hover { background: var(--blue-100); border-color: var(--blue-600); color: var(--text); }
+.btn--on-dark { border-color: rgba(255,255,255,.35); color: #fff; }
+.btn--on-dark:hover { background: rgba(255,255,255,.1); color: #fff; border-color: #fff; }
+.btn--sm { padding: .35rem .8rem; font-size: var(--fs-sm); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+/* ---------- 6. Hero ---------- */
+.hero {
+  position: relative; overflow: hidden; color: var(--text-on-dark);
+  background:
+    radial-gradient(900px 400px at 85% 10%, rgba(10,110,209,.45), transparent 60%),
+    linear-gradient(160deg, var(--ink-900), var(--ink-700));
+  padding-block: var(--s8) var(--s7);
+}
+.hero::before { /* racking grid pattern */
+  content: ""; position: absolute; inset: 0; opacity: .18; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.35) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+}
+.hero__grid { position: relative; display: grid; grid-template-columns: 1.15fr .85fr; gap: var(--s7); align-items: center; }
+.hero h1 { font-size: var(--fs-hero); font-weight: 700; color: #fff; letter-spacing: -.025em; margin-bottom: var(--s4); }
+.hero p { color: #c4d4e4; font-size: var(--fs-lg); }
+.hero .row { margin-top: var(--s5); }
+.hero__meta { display: flex; flex-wrap: wrap; gap: var(--s5); margin-top: var(--s6); color: #9db4cb; font-size: var(--fs-sm); }
+.hero__meta strong { display: block; color: #fff; font-size: var(--fs-xl); font-weight: 600; }
+
+/* Live "control tower" card in hero */
+.tower { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16); border-radius: var(--r-lg); padding: var(--s5); backdrop-filter: blur(8px); box-shadow: var(--shadow-3); }
+.tower h3 { color: #fff; font-size: var(--fs-md); display: flex; justify-content: space-between; align-items: center; }
+.tower ul li { display: flex; justify-content: space-between; gap: var(--s3); padding: .6rem 0; border-top: 1px solid rgba(255,255,255,.12); font-size: var(--fs-sm); color: #d6e3ef; }
+.live-dot { width: 9px; height: 9px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 0 0 rgba(61,220,132,.7); animation: pulse 2s infinite; display: inline-block; margin-right: 6px; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 9px rgba(61,220,132,0); } 100% { box-shadow: 0 0 0 0 rgba(61,220,132,0); } }
+
+/* ---------- 7. Cards, tiles ---------- */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-1); padding: var(--s5); }
+.card--flush { padding: 0; overflow: hidden; }
+.card__head { display: flex; justify-content: space-between; align-items: center; gap: var(--s3); padding: var(--s4) var(--s5); border-bottom: 1px solid var(--line); }
+.card__head h3 { margin: 0; font-size: var(--fs-md); }
+.card__body { padding: var(--s5); }
+.card__sub { color: var(--text-faint); font-size: var(--fs-xs); }
+.feature { border-left: 4px solid var(--blue-600); }
+.feature h3 { font-size: var(--fs-lg); }
+.feature p { color: var(--text-soft); margin: 0; font-size: var(--fs-sm); }
+.value-list li { padding: var(--s3) 0 var(--s3) var(--s5); border-bottom: 1px solid var(--line); position: relative; }
+.value-list li::before { content: ""; position: absolute; left: 0; top: 1.15rem; width: 10px; height: 10px; background: var(--amber-500); transform: rotate(45deg); }
+
+/* Process chain (inbound → putaway → pick → pack → ship) — a real sequence */
+.chain { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; counter-reset: step; }
+.chain li { position: relative; padding: var(--s4) var(--s3) var(--s4) var(--s5); background: var(--surface); border: 1px solid var(--line); margin-left: -1px; font-size: var(--fs-sm); counter-increment: step; }
+.chain li::before { content: counter(step); display: block; font-weight: 700; color: var(--blue-600); font-size: var(--fs-lg); }
+.chain li strong { display: block; color: var(--text); }
+.chain li span { color: var(--text-soft); }
+.chain li:first-child { border-radius: var(--r-md) 0 0 var(--r-md); margin-left: 0; }
+.chain li:last-child { border-radius: 0 var(--r-md) var(--r-md) 0; }
+
+/* ---------- 8. KPI tiles (Fiori numeric tiles) ---------- */
+.kpi { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: var(--s4) var(--s5); box-shadow: var(--shadow-1); overflow: hidden; transition: box-shadow .2s var(--ease), transform .2s var(--ease); }
+.kpi::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--kpi-color, var(--blue-600)); }
+.kpi:hover { box-shadow: var(--shadow-2); }
+.kpi__label { font-size: var(--fs-sm); color: var(--text-soft); font-weight: 500; }
+.kpi__value { font-size: 2rem; font-weight: 600; line-height: 1.15; margin: var(--s1) 0; letter-spacing: -.02em; }
+.kpi__value small { font-size: var(--fs-md); font-weight: 500; color: var(--text-soft); margin-left: 2px; }
+.kpi__trend { font-size: var(--fs-xs); font-weight: 600; display: inline-flex; align-items: center; gap: 4px; padding: 1px 8px; border-radius: var(--r-pill); }
+.kpi__trend--up { color: var(--ok); background: var(--ok-bg); }
+.kpi__trend--down { color: var(--bad); background: var(--bad-bg); }
+.kpi__trend--flat { color: var(--idle); background: var(--idle-bg); }
+.kpi svg.spark { position: absolute; right: var(--s4); bottom: var(--s3); width: 84px; height: 30px; opacity: .85; }
+.kpi--ok { --kpi-color: var(--ok); } .kpi--warn { --kpi-color: var(--warn); }
+.kpi--bad { --kpi-color: var(--bad); } .kpi--amber { --kpi-color: var(--amber-500); }
+
+/* ---------- 9. Dashboard frame ---------- */
+.dash { background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-lg); padding: var(--s4); box-shadow: var(--shadow-2); }
+.dash__bar { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: center; justify-content: space-between; padding: var(--s2) var(--s2) var(--s4); }
+.dash__bar h3 { margin: 0; font-size: var(--fs-lg); }
+.dash__layout { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--s4); }
+.span-12 { grid-column: span 12; } .span-8 { grid-column: span 8; }
+.span-7 { grid-column: span 7; } .span-6 { grid-column: span 6; }
+.span-5 { grid-column: span 5; } .span-4 { grid-column: span 4; }
+.span-3 { grid-column: span 3; } .span-2 { grid-column: span 2; }
+
+/* Segmented control / filter chips */
+.segmented { display: inline-flex; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-md); padding: 2px; }
+.segmented button { border: 0; background: transparent; padding: .3rem .8rem; border-radius: 6px; cursor: pointer; font-size: var(--fs-sm); font-weight: 500; color: var(--text-soft); }
+.segmented button:hover { color: var(--text); }
+.segmented button[aria-pressed="true"] { background: var(--blue-600); color: #fff; }
+
+/* Charts */
+.chart { width: 100%; height: 260px; }
+.chart text { fill: var(--text-soft); font-size: 11px; font-family: var(--font-ui); }
+.chart .gridline { stroke: var(--line); stroke-dasharray: 3 4; }
+.chart .bar-a { fill: var(--blue-600); }
+.chart .bar-b { fill: var(--amber-500); }
+.chart .line-c { fill: none; stroke: var(--ok); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.chart .dot-c { fill: var(--surface); stroke: var(--ok); stroke-width: 2; }
+.chart rect:hover { filter: brightness(1.15); }
+.legend { display: flex; flex-wrap: wrap; gap: var(--s4); font-size: var(--fs-xs); color: var(--text-soft); margin-top: var(--s2); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+/* Donut (CSS conic) */
+.donut { --p: 74; --c: var(--blue-600); width: 150px; aspect-ratio: 1; border-radius: 50%; margin-inline: auto; position: relative;
+  background: conic-gradient(var(--c) calc(var(--p) * 1%), var(--occ-0) 0); }
+.donut::after { content: attr(data-label); position: absolute; inset: 18px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; font-size: 1.6rem; font-weight: 600; }
+.zone-list li { display: grid; grid-template-columns: 90px 1fr 44px; gap: var(--s3); align-items: center; font-size: var(--fs-sm); padding: 6px 0; }
+.meter { height: 8px; background: var(--occ-0); border-radius: var(--r-pill); overflow: hidden; }
+.meter > i { display: block; height: 100%; width: var(--w, 50%); background: var(--m, var(--blue-600)); border-radius: inherit; transition: width .8s var(--ease); }
+
+/* Bin heat map — the signature element: a top-down view of the racking */
+.binmap { display: grid; grid-template-columns: repeat(var(--cols, 20), 1fr); gap: 3px; }
+.bin { aspect-ratio: 1.4; border-radius: 3px; background: var(--occ-0); border: 0; padding: 0; cursor: pointer; transition: transform .1s var(--ease); }
+.bin:hover { transform: scale(1.35); z-index: 2; position: relative; box-shadow: var(--shadow-2); }
+.bin[data-occ="1"] { background: var(--occ-1); } .bin[data-occ="2"] { background: var(--occ-2); }
+.bin[data-occ="3"] { background: var(--occ-3); } .bin[data-occ="4"] { background: var(--occ-4); }
+.bin[data-occ="5"] { background: var(--occ-5); } .bin[data-occ="x"] { background: var(--occ-x); }
+.binmap-scale { display: flex; flex-wrap: wrap; gap: var(--s4); font-size: var(--fs-xs); color: var(--text-soft); margin-top: var(--s3); }
+.binmap-scale i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 6px; vertical-align: -2px; }
+.bin-readout { margin-top: var(--s3); padding: var(--s3) var(--s4); background: var(--surface-2); border: 1px dashed var(--line-strong); border-radius: var(--r-md); font-size: var(--fs-sm); min-height: 3rem; }
+
+/* ---------- 10. Status badges (SAP object status) ---------- */
+.status { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: var(--r-pill); font-size: var(--fs-xs); font-weight: 600; white-space: nowrap; }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.status--ok { color: var(--ok); background: var(--ok-bg); }
+.status--warn { color: var(--warn); background: var(--warn-bg); }
+.status--bad { color: var(--bad); background: var(--bad-bg); }
+.status--info { color: var(--info); background: var(--info-bg); }
+.status--idle { color: var(--idle); background: var(--idle-bg); }
+
+/* ---------- 11. Tables ---------- */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+thead th { position: sticky; top: 0; background: var(--surface-2); text-align: left; font-weight: 600; color: var(--text-soft); padding: .7rem 1rem; border-bottom: 2px solid var(--line-strong); white-space: nowrap; }
+tbody td { padding: .7rem 1rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+tbody tr { transition: background .12s; }
+tbody tr:hover { background: var(--blue-100); }
+td.num, th.num { text-align: right; }
+tfoot td { padding: .7rem 1rem; font-weight: 600; background: var(--surface-2); }
+.price { font-weight: 600; white-space: nowrap; }
+
+/* ---------- 12. Forms ---------- */
+.form { display: grid; gap: var(--s4); }
+.form--inline { grid-template-columns: 1fr auto; align-items: end; }
+.field { display: grid; gap: 6px; }
+.field label { font-size: var(--fs-sm); font-weight: 600; color: var(--text); }
+.field .hint { font-size: var(--fs-xs); color: var(--text-faint); }
+.input, .select, .textarea {
+  width: 100%; padding: .6rem .8rem; background: var(--surface); border: 1px solid var(--line-strong);
+  border-radius: var(--r-md); transition: border-color .15s, box-shadow .15s;
+}
+.textarea { min-height: 120px; resize: vertical; }
+.input:hover, .select:hover, .textarea:hover { border-color: var(--text-faint); }
+.input:focus, .select:focus, .textarea:focus { outline: 0; border-color: var(--blue-600); box-shadow: 0 0 0 3px rgba(10,110,209,.25); }
+.input[aria-invalid="true"] { border-color: var(--bad); }
+.error-text { color: var(--bad); font-size: var(--fs-xs); min-height: 1em; }
+.form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s4); }
+.form-note { padding: var(--s3) var(--s4); border-radius: var(--r-md); font-size: var(--fs-sm); display: none; }
+.form-note.is-visible { display: block; }
+.form-note--ok { background: var(--ok-bg); color: var(--ok); }
+.form-note--bad { background: var(--bad-bg); color: var(--bad); }
+
+/* ---------- 13. Shipment tracker (business feature) ---------- */
+.tracker-result { margin-top: var(--s5); }
+.timeline { display: grid; grid-template-columns: repeat(5, 1fr); position: relative; margin: var(--s5) 0 var(--s4); }
+.timeline::before { content: ""; position: absolute; left: 10%; right: 10%; top: 13px; height: 3px; background: var(--line-strong); }
+.timeline li { position: relative; text-align: center; font-size: var(--fs-xs); color: var(--text-faint); padding-top: 34px; }
+.timeline li::before { content: ""; position: absolute; top: 5px; left: 50%; width: 18px; height: 18px; margin-left: -9px; border-radius: 50%; background: var(--surface); border: 3px solid var(--line-strong); z-index: 1; }
+.timeline li.done { color: var(--text); }
+.timeline li.done::before { background: var(--ok); border-color: var(--ok); }
+.timeline li.current { color: var(--blue-600); font-weight: 700; }
+.timeline li.current::before { background: var(--surface); border-color: var(--blue-600); box-shadow: 0 0 0 5px var(--info-bg); }
+.timeline li.stuck::before { border-color: var(--bad); background: var(--bad); }
+.detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--s4); }
+.detail-grid dt { font-size: var(--fs-xs); color: var(--text-faint); }
+.detail-grid dd { margin: 0 0 var(--s2); font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s3); }
+.chip { border: 1px solid var(--line-strong); background: var(--surface); border-radius: var(--r-pill); padding: 2px 12px; font-size: var(--fs-xs); cursor: pointer; }
+.chip:hover { background: var(--blue-100); border-color: var(--blue-600); }
+
+/* ---------- 14. Alerts / exceptions panel ---------- */
+.alert-list li { display: grid; grid-template-columns: auto 1fr auto; gap: var(--s3); padding: var(--s3) 0; border-bottom: 1px solid var(--line); font-size: var(--fs-sm); align-items: start; }
+.alert-list li:last-child { border-bottom: 0; }
+.alert-list b { display: block; }
+.alert-list time { color: var(--text-faint); font-size: var(--fs-xs); white-space: nowrap; }
+
+/* ---------- 15. Contact ---------- */
+.contact-list li { display: grid; grid-template-columns: 40px 1fr; gap: var(--s3); padding: var(--s3) 0; border-bottom: 1px solid var(--line); }
+.contact-list .ico { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: var(--blue-100); color: var(--blue-600); font-weight: 700; }
+.contact-list small { display: block; color: var(--text-faint); font-size: var(--fs-xs); }
+.contact-list a { font-weight: 600; word-break: break-word; }
+.owner-card { background: linear-gradient(135deg, var(--ink-800), var(--ink-600)); color: #fff; border-radius: var(--r-lg); padding: var(--s5); display: flex; gap: var(--s4); align-items: center; }
+.owner-card .avatar { width: 56px; height: 56px; font-size: 1.2rem; flex: none; }
+.owner-card a { color: #ffd36b; }
+.owner-card p { margin: 0; color: #c9d8e6; font-size: var(--fs-sm); }
+.owner-card strong { font-size: var(--fs-lg); display: block; }
+.map-link { display: grid; place-items: center; min-height: 190px; border-radius: var(--r-md); text-decoration: none; color: var(--text);
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 36px 36px,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 36px 36px, var(--surface-2);
+  border: 1px solid var(--line); font-weight: 600; text-align: center; padding: var(--s4); }
+.map-link:hover { border-color: var(--blue-600); }
+
+/* ---------- 16. Footer ---------- */
+.footer { background: var(--ink-900); color: #9db4cb; padding-block: var(--s7) var(--s5); font-size: var(--fs-sm); border-top: 3px solid var(--amber-500); }
+.footer a { color: #cfe0f1; }
+.footer a:hover { color: #fff; }
+.footer h4 { color: #fff; font-size: var(--fs-md); }
+.footer li { padding: 3px 0; }
+.footer__bottom { margin-top: var(--s6); padding-top: var(--s4); border-top: 1px solid rgba(255,255,255,.12); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s3); }
+
+/* ---------- 17. Toast & back-to-top ---------- */
+.toast { position: fixed; right: var(--s5); bottom: var(--s5); background: var(--ink-900); color: #fff; padding: .8rem 1.2rem; border-radius: var(--r-md); border-left: 4px solid var(--amber-500); box-shadow: var(--shadow-3); transform: translateY(20px); opacity: 0; pointer-events: none; transition: .25s var(--ease); z-index: 200; max-width: 340px; }
+.toast.is-visible { transform: none; opacity: 1; }
+.to-top { position: fixed; right: var(--s5); bottom: 5rem; width: 42px; height: 42px; border-radius: 50%; border: 0; background: var(--blue-600); color: #fff; cursor: pointer; box-shadow: var(--shadow-2); opacity: 0; pointer-events: none; transition: .2s; }
+.to-top.is-visible { opacity: 1; pointer-events: auto; }
+
+/* ---------- 18. Page-load reveal (single orchestrated moment) ---------- */
+.reveal { animation: rise .7s var(--ease) both; }
+.reveal:nth-child(2) { animation-delay: .08s; } .reveal:nth-child(3) { animation-delay: .16s; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.skeleton { background: linear-gradient(90deg, var(--occ-0) 25%, var(--surface-2) 50%, var(--occ-0) 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: var(--r-sm); }
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* ---------- 19. Responsive ---------- */
+@media (max-width: 1080px) {
+  .span-8, .span-7, .span-6, .span-5, .span-4 { grid-column: span 12; }
+  .span-3 { grid-column: span 6; }
+  .hero__grid { grid-template-columns: 1fr; }
+  .shell__search { display: none; }
+  .chain { grid-template-columns: 1fr; }
+  .chain li, .chain li:first-child, .chain li:last-child { border-radius: 0; margin: -1px 0 0; }
+}
+@media (max-width: 860px) {
+  .menu-toggle { display: grid; }
+  .nav { position: absolute; top: var(--shell-h); left: 0; right: 0; flex-direction: column; background: var(--ink-800); padding: var(--s3); margin: 0; display: none; border-bottom: 3px solid var(--amber-500); }
+  .nav.is-open { display: flex; }
+  .nav a.is-active::after { display: none; }
+  .section { padding-block: var(--s7); }
+  .form-grid, .form--inline { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .span-3, .span-2 { grid-column: span 12; }
+  .timeline { grid-template-columns: 1fr; gap: var(--s3); }
+  .timeline::before { left: 8px; right: auto; top: 10px; bottom: 10px; width: 3px; height: auto; }
+  .timeline li { text-align: left; padding: 0 0 0 36px; min-height: 22px; }
+  .timeline li::before { left: 0; top: 2px; margin-left: 0; }
+  .owner-card { flex-direction: column; text-align: center; }
+  .binmap { --cols: 12 !important; }
+}
+
+/* ---------- 20. Accessibility, print ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (forced-colors: active) { .kpi::before { background: Highlight; } .btn { border: 1px solid ButtonText; } }
+@media print {
+  .shell, .toast, .to-top, .menu-toggle, .hero::before, .footer .row { display: none !important; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .section { padding-block: 1rem; page-break-inside: avoid; }
+  .card, .kpi { box-shadow: none; border-color: #999; }
+  a { color: #000; text-decoration: none; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; }
+}
+
+</style>
+  <!-- Owner: Preetam Devanda | preetam.devanda_mba25@gsv.ac.in | +91 7610845387 -->
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ================= SHELL BAR ================= -->
+<header class="shell">
+  <div class="container shell__inner">
+    <a class="brand" href="#home" aria-label="StockSphere WMS home">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJTdG9ja1NwaGVyZSBsb2dvIj4KICA8cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0iIzBhNmVkMSIvPgogIDxwYXRoIGQ9Ik0xMCAyNiAzMiAxMmwyMiAxNHYyNmEyIDIgMCAwIDEtMiAySDEyYTIgMiAwIDAgMS0yLTJ6IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuOTUiLz4KICA8ZyBmaWxsPSIjMGExZjMzIj48cmVjdCB4PSIxNyIgeT0iMzAiIHdpZHRoPSIxMiIgaGVpZ2h0PSI4IiByeD0iMSIvPjxyZWN0IHg9IjM1IiB5PSIzMCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjgiIHJ4PSIxIi8+PHJlY3QgeD0iMTciIHk9IjQyIiB3aWR0aD0iMTIiIGhlaWdodD0iOCIgcng9IjEiLz48L2c+CiAgPHJlY3QgeD0iMzUiIHk9IjQyIiB3aWR0aD0iMTIiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNmMmE5MDAiLz4KPC9zdmc+Cg==" alt="" width="32" height="32">
+      <span>StockSphere WMS<small>Warehouse Management Service</small></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#tracker">Track Shipment</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="shell__tools">
+      <label class="shell__search" title="Jump to shipment tracking">
+        <span class="sr-only">Quick shipment search</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8fa7bf" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="quickSearch" type="search" placeholder="Order ID, e.g. TRK1025" autocomplete="off">
+      </label>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <span class="avatar" title="Owner: Preetam Devanda" aria-label="Owner Preetam Devanda">PD</span>
+      <button class="icon-btn menu-toggle" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= 1. HOME ================= -->
+<section class="hero" id="home">
+  <div class="container hero__grid">
+    <div class="reveal">
+      <h1>Every pallet, bin and order — in one live view.</h1>
+      <p><strong>StockSphere WMS</strong> runs third-party warehousing for growing manufacturers, e-commerce sellers and distributors: inventory control, inbound and putaway, wave picking, packing and dispatch, with a manager dashboard that shows problems before customers do.</p>
+      <div class="row">
+        <a class="btn btn--accent" href="#services">Get Started</a>
+        <a class="btn btn--ghost btn--on-dark" href="#dashboard">View live dashboard</a>
+      </div>
+      <div class="hero__meta">
+        <div><strong>48,620</strong>units in stock</div>
+        <div><strong>99.2%</strong>pick accuracy</div>
+        <div><strong>78%</strong>space utilised</div>
+      </div>
+    </div>
+    <aside class="tower reveal" aria-label="Warehouse control tower snapshot">
+      <h3>Control tower <span><span class="live-dot"></span>Live</span></h3>
+      <ul id="towerList"></ul>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= 2. ABOUT ================= -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="section__head">
+      <h2>About the business</h2>
+      <p>Small and mid-sized businesses lose sales when stock is miscounted, orders ship late, or nobody knows which bin holds what. We fix that with disciplined warehouse processes and a system that records every movement.</p>
+    </div>
+    <div class="grid grid--2">
+      <div class="stack">
+        <article class="card feature"><h3>What we do</h3><p>We receive, store, pick, pack and dispatch goods on behalf of our clients, with bin-level inventory control and barcode-confirmed movements.</p></article>
+        <article class="card feature"><h3>Target customers</h3><p>D2C and e-commerce brands, FMCG and electronics distributors, pharma and auto-parts traders, and manufacturers who need overflow storage.</p></article>
+        <article class="card feature"><h3>Service area</h3><p>Primary hub in Vadodara, Gujarat, with same-day linehaul to Ahmedabad, Surat and Mumbai.</p></article>
+      </div>
+      <div class="card">
+        <h3>Key value proposition</h3>
+        <ul class="value-list">
+          <li><strong>Accurate stock:</strong> cycle counts and scan-based putaway keep record and reality within 1%.</li>
+          <li><strong>Faster orders:</strong> wave picking and slotting by velocity cut walking time.</li>
+          <li><strong>Visibility:</strong> clients see inventory and order status in real time.</li>
+          <li><strong>Lower cost:</strong> pay per pallet and per order, with no fixed building or labour cost.</li>
+        </ul>
+      </div>
+    </div>
+    <h3 style="margin-top:var(--s6)">How an order moves through the warehouse</h3>
+    <ol class="chain" aria-label="Warehouse process flow">
+      <li><strong>Inbound</strong><span>Dock scheduling, ASN check, goods receipt</span></li>
+      <li><strong>Putaway</strong><span>System-directed bin assignment</span></li>
+      <li><strong>Pick</strong><span>Wave and zone picking with scanning</span></li>
+      <li><strong>Pack</strong><span>Weigh, label, quality check</span></li>
+      <li><strong>Dispatch</strong><span>Carrier handover and tracking ID</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= 3. SERVICES ================= -->
+<section class="section section--alt" id="services">
+  <div class="container">
+    <div class="section__head">
+      <h2>Services and pricing</h2>
+      <p>Transparent rate card. Pick a service, then send an enquiry and we reply within one working day.</p>
+    </div>
+    <div class="card card--flush">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Service</th><th>Description</th><th>Billed per</th><th class="num">Price</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Pallet storage</strong></td><td>Racked, insured, barcode-tracked storage</td><td>Pallet / month</td><td class="num price">₹450</td><td><a class="btn btn--ghost btn--sm" href="#contact" data-service="Pallet storage">Enquire</a></td></tr>
+            <tr><td><strong>Inbound handling</strong></td><td>Unloading, GRN, quality check, putaway</td><td>Pallet</td><td class="num price">₹120</td><td><a class="btn btn--ghost btn--sm" href="#contact" data-service="Inbound handling">Enquire</a></td></tr>
+            <tr><td><strong>Pick &amp; pack</strong></td><td>Each-picking, packing, labelling</td><td>Order line</td><td class="num price">₹18</td><td><a class="btn btn--ghost btn--sm" href="#contact" data-service="Pick and pack">Enquire</a></td></tr>
+            <tr><td><strong>Cross-docking</strong></td><td>Receive and dispatch within 24 hours, no storage</td><td>Pallet</td><td class="num price">₹200</td><td><a class="btn btn--ghost btn--sm" href="#contact" data-service="Cross-docking">Enquire</a></td></tr>
+            <tr><td><strong>Kitting &amp; labelling</strong></td><td>Bundle assembly, barcode and MRP labelling</td><td>Unit</td><td class="num price">₹8</td><td><a class="btn btn--ghost btn--sm" href="#contact" data-service="Kitting and labelling">Enquire</a></td></tr>
+            <tr><td><strong>Returns processing</strong></td><td>Inspection, regrade, restock or dispose</td><td>Return</td><td class="num price">₹35</td><td><a class="btn btn--ghost btn--sm" href="#contact" data-service="Returns processing">Enquire</a></td></tr>
+            <tr><td><strong>Dispatch &amp; linehaul</strong></td><td>Carrier booking and same-day city dispatch</td><td>Shipment</td><td class="num price">From ₹150</td><td><a class="btn btn--ghost btn--sm" href="#contact" data-service="Dispatch and linehaul">Enquire</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="card__sub" style="margin-top:var(--s3)">Prices are indicative and exclude GST. Volume discounts apply above 500 pallets.</p>
+  </div>
+</section>
+
+<!-- ================= 4. DASHBOARD ================= -->
+<section class="section" id="dashboard">
+  <div class="container">
+    <div class="section__head">
+      <h2>Manager dashboard</h2>
+      <p>What the warehouse manager needs to know right now: stock, inbound and outbound volume, stock-outs, space and exceptions.</p>
+    </div>
+
+    <div class="dash">
+      <div class="dash__bar">
+        <h3>Warehouse overview — Vadodara Hub</h3>
+        <div class="row">
+          <div class="segmented" role="group" aria-label="Time range filter">
+            <button type="button" data-range="7" aria-pressed="true">7 days</button>
+            <button type="button" data-range="14" aria-pressed="false">14 days</button>
+            <button type="button" data-range="30" aria-pressed="false">30 days</button>
+          </div>
+          <a class="btn btn--primary btn--sm" href="#tracker">Open order tracking</a>
+        </div>
+      </div>
+
+      <div class="dash__layout">
+        <div class="span-12"><div class="grid grid--3" id="kpiGrid" aria-live="polite"></div></div>
+
+        <div class="span-8 card card--flush">
+          <div class="card__head"><h3>Orders received vs dispatched</h3><span class="card__sub" id="chartRange">Last 7 days</span></div>
+          <div class="card__body">
+            <svg id="mainChart" class="chart" role="img" aria-label="Bar chart of orders received and dispatched with on-time dispatch trend"></svg>
+            <div class="legend"><span><i style="background:var(--blue-600)"></i>Received</span><span><i style="background:var(--amber-500)"></i>Dispatched</span><span><i style="background:var(--ok)"></i>On-time dispatch %</span></div>
+          </div>
+        </div>
+
+        <div class="span-4 card card--flush">
+          <div class="card__head"><h3>Warehouse utilisation</h3></div>
+          <div class="card__body">
+            <div class="donut" id="donut" data-label="78%" style="--p:78"></div>
+            <ul class="zone-list" id="zoneList" style="margin-top:var(--s4)"></ul>
+          </div>
+        </div>
+
+        <div class="span-7 card card--flush">
+          <div class="card__head"><h3>Rack occupancy map</h3><span class="card__sub">Hover or tap a bin</span></div>
+          <div class="card__body">
+            <div class="binmap" id="binmap" role="group" aria-label="Storage bin occupancy"></div>
+            <div class="binmap-scale">
+              <span><i style="background:var(--occ-0)"></i>Empty</span><span><i style="background:var(--occ-2)"></i>Partly full</span>
+              <span><i style="background:var(--occ-4)"></i>Full</span><span><i style="background:var(--occ-5)"></i>Over 95%</span><span><i style="background:var(--occ-x)"></i>Blocked</span>
+            </div>
+            <div class="bin-readout" id="binReadout" aria-live="polite">Select a bin to see its contents.</div>
+          </div>
+        </div>
+
+        <div class="span-5 card card--flush">
+          <div class="card__head"><h3>Exceptions needing action</h3><span class="status status--bad" id="alertCount">4 open</span></div>
+          <div class="card__body"><ul class="alert-list" id="alertList"></ul></div>
+        </div>
+
+        <div class="span-12 card card--flush">
+          <div class="card__head"><h3>Stock-out and low-stock items</h3><a class="btn btn--ghost btn--sm" href="#contact">Request replenishment</a></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>SKU</th><th>Item</th><th>Zone</th><th class="num">On hand</th><th class="num">Reorder level</th><th>Status</th></tr></thead>
+              <tbody id="stockTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5. TRACKER (interactive feature) ================= -->
+<section class="section section--alt" id="tracker">
+  <div class="container">
+    <div class="section__head">
+      <h2>Track a shipment</h2>
+      <p>Enter an order ID to see where it is in the warehouse flow. Try one of the sample IDs below.</p>
+    </div>
+    <div class="grid grid--2">
+      <div class="card">
+        <form class="form form--inline" id="trackForm" novalidate>
+          <div class="field">
+            <label for="orderId">Order ID</label>
+            <input class="input" id="orderId" name="orderId" placeholder="TRK1025" autocomplete="off" maxlength="12" required>
+            <span class="error-text" id="orderErr" role="alert"></span>
+          </div>
+          <button class="btn btn--primary" type="submit">Track order</button>
+        </form>
+        <div class="chips" id="sampleChips" aria-label="Sample order IDs"></div>
+        <div class="tracker-result" id="trackResult" aria-live="polite"></div>
+      </div>
+      <div class="card">
+        <h3>Why this matters</h3>
+        <p>Clients ask the same question all day: "Where is my order?" Self-service tracking removes those calls and shows the manager which orders are stuck in the warehouse and at which step.</p>
+        <p class="card__sub">Business link: dashboard exceptions → this tracker → contact desk for escalation. Demo data only.</p>
+        <a class="btn btn--ghost" href="#contact">Escalate a delayed order</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. CONTACT ================= -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="section__head">
+      <h2>Contact and enquiry</h2>
+      <p>Tell us what you store and how many orders you ship. We will send a quote within one working day.</p>
+    </div>
+    <div class="grid grid--2">
+      <div class="stack">
+        <div class="owner-card">
+          <span class="avatar">PD</span>
+          <div>
+            <strong>Preetam Devanda</strong>
+            <p>Owner, StockSphere WMS</p>
+            <p><a href="mailto:preetam.devanda_mba25@gsv.ac.in">preetam.devanda_mba25@gsv.ac.in</a></p>
+            <p><a href="tel:+917610845387">+91 7610845387</a></p>
+          </div>
+        </div>
+        <div class="card">
+          <ul class="contact-list">
+            <li><span class="ico">@</span><div><small>Email — sales and quotes</small><a href="mailto:preetam.devanda_mba25@gsv.ac.in?subject=Warehouse%20enquiry">preetam.devanda_mba25@gsv.ac.in</a></div></li>
+            <li><span class="ico">☎</span><div><small>Phone / WhatsApp — Mon–Sat, 9:00–18:00 IST</small><a href="tel:+917610845387">+91 7610845387</a></div></li>
+            <li><span class="ico">⌖</span><div><small>Location</small><a href="https://www.google.com/maps/search/?api=1&amp;query=Gati+Shakti+Vishwavidyalaya+Vadodara" target="_blank" rel="noopener">Vadodara, Gujarat, India — open in Google Maps</a></div></li>
+            <li><span class="ico">↗</span><div><small>Industry reference — barcode and GS1 standards used in our bins and labels</small><a href="https://www.gs1india.org/" target="_blank" rel="noopener">GS1 India</a></div></li>
+            <li><span class="ico">↗</span><div><small>Academic partner — Gati Shakti Vishwavidyalaya</small><a href="https://gsv.ac.in/" target="_blank" rel="noopener">gsv.ac.in</a></div></li>
+          </ul>
+        </div>
+        <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Vadodara+Gujarat" target="_blank" rel="noopener">Find our hub on Google Maps<br><span class="card__sub">Opens in a new tab</span></a>
+      </div>
+
+      <div class="card">
+        <h3>Send an enquiry</h3>
+        <form class="form" id="enquiryForm" novalidate>
+          <div class="form-grid">
+            <div class="field"><label for="name">Full name</label><input class="input" id="name" name="name" autocomplete="name" required><span class="error-text" role="alert"></span></div>
+            <div class="field"><label for="email">Work email</label><input class="input" id="email" name="email" type="email" autocomplete="email" required><span class="error-text" role="alert"></span></div>
+            <div class="field"><label for="phone">Phone</label><input class="input" id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+91 …"><span class="error-text" role="alert"></span></div>
+            <div class="field"><label for="service">Service needed</label>
+              <select class="select" id="service" name="service">
+                <option>Pallet storage</option><option>Inbound handling</option><option>Pick and pack</option>
+                <option>Cross-docking</option><option>Kitting and labelling</option><option>Returns processing</option><option>Dispatch and linehaul</option>
+              </select></div>
+          </div>
+          <div class="field"><label for="volume">Expected monthly volume</label>
+            <select class="select" id="volume" name="volume"><option>Under 100 orders</option><option>100 – 1,000 orders</option><option>1,000 – 10,000 orders</option><option>Over 10,000 orders</option></select></div>
+          <div class="field"><label for="message">Message</label><textarea class="textarea" id="message" name="message" required placeholder="What do you store, and how fast do you need to ship?"></textarea><span class="error-text" role="alert"></span></div>
+          <div class="form-note" id="formNote" role="status"></div>
+          <button class="btn btn--primary" type="submit">Send enquiry</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="grid grid--3">
+      <div><h4>StockSphere WMS</h4><p>Third-party warehousing with bin-level control and a live manager dashboard.</p></div>
+      <div><h4>Navigate</h4><ul><li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#dashboard">Dashboard</a></li><li><a href="#tracker">Track shipment</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div><h4>Owner</h4><ul><li>Preetam Devanda</li><li><a href="mailto:preetam.devanda_mba25@gsv.ac.in">preetam.devanda_mba25@gsv.ac.in</a></li><li><a href="tel:+917610845387">+91 7610845387</a></li></ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span id="year">2026</span> StockSphere WMS. Owner: Preetam Devanda.</span>
+      <span>Class project — ITBT Live Class Exercise. Data shown is sample data.</span>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" type="button" aria-label="Back to top">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+/* ==========================================================================
+   StockSphere WMS — interactive logic
+   Owner  : Preetam Devanda | preetam.devanda_mba25@gsv.ac.in | +91 7610845387
+   Features: dashboard (KPIs, chart, filter, heat map), shipment tracker,
+             enquiry form validation, theme toggle, scroll-spy navigation.
+   All data below is sample data for the class exercise.
+   ========================================================================== */
+"use strict";
+
+const $  = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+const fmt = n => new Intl.NumberFormat("en-IN").format(Math.round(n));
+
+/* ---------- Seeded random so charts look the same on every load ---------- */
+function rng(seed) { return () => (seed = (seed * 16807) % 2147483647) / 2147483647; }
+
+/* ---------- Sample data ---------- */
+const DAYS = (() => {
+  const r = rng(42), out = [], d = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const day = new Date(d); day.setDate(d.getDate() - i);
+    const received = Math.round(30 + r() * 25);
+    const dispatched = Math.max(20, received - Math.round(r() * 7) + Math.round(r() * 3));
+    const onTime = Math.min(99, Math.round(80 + r() * 17));
+    out.push({ label: day.toLocaleDateString("en-IN", { day: "2-digit", month: "short" }), received, dispatched, onTime });
+  }
+  return out;
+})();
+
+const ZONES = [
+  { name: "Ambient", pct: 82 }, { name: "Fast-pick", pct: 91 },
+  { name: "Bulk pallet", pct: 68 }, { name: "Cold room", pct: 74 }, { name: "Returns", pct: 41 }
+];
+
+const ALERTS = [
+  { lvl: "bad",  t: "Dock 3 truck delayed 2h", d: "Inbound ASN-7741 · 12 pallets electronics", when: "10 min" },
+  { lvl: "bad",  t: "SKU WM-2210 out of stock", d: "6 open order lines waiting", when: "35 min" },
+  { lvl: "warn", t: "Bin A-14-03 blocked", d: "Damaged beam, inspection pending", when: "1 h" },
+  { lvl: "warn", t: "Cycle count variance", d: "Zone Fast-pick: 3 SKUs over 2% variance", when: "3 h" }
+];
+
+const STOCK = [
+  { sku: "WM-2210", item: "Wireless barcode scanner", zone: "Fast-pick", onHand: 0,  reorder: 40 },
+  { sku: "WM-1187", item: "Thermal label roll 100×150", zone: "Ambient",   onHand: 0,  reorder: 200 },
+  { sku: "WM-3305", item: "Stretch film 20 µ",         zone: "Bulk pallet", onHand: 14, reorder: 60 },
+  { sku: "WM-4012", item: "Corrugated box 5-ply M",    zone: "Ambient",   onHand: 85, reorder: 150 },
+  { sku: "WM-5521", item: "Insulated shipper 20 L",    zone: "Cold room", onHand: 22, reorder: 30 },
+  { sku: "WM-6098", item: "Pallet strapping 12 mm",    zone: "Bulk pallet", onHand: 0, reorder: 25 }
+];
+
+const STAGES = ["Order received", "Picking", "Packing", "Dispatched", "Delivered"];
+const ORDERS = {
+  TRK1025: { customer: "Nilgiri Electronics", stage: 3, status: "In transit", tone: "info", where: "Linehaul — Vadodara to Ahmedabad", eta: "Today, 6:30 PM", partner: "BlueArrow Carriers", wh: "Vadodara Hub", lines: 14 },
+  TRK1026: { customer: "Aarav Home Decor", stage: 1, status: "Picking", tone: "warn", where: "Zone Fast-pick, aisle B", eta: "Tomorrow, 11:00 AM", partner: "Not yet assigned", wh: "Vadodara Hub", lines: 6 },
+  TRK1027: { customer: "Kaveri Pharma Traders", stage: 2, status: "Packing", tone: "info", where: "Pack bench 4", eta: "Tomorrow, 2:00 PM", partner: "ColdLine Express", wh: "Vadodara Hub", lines: 22 },
+  TRK1028: { customer: "Meera Organics", stage: 4, status: "Delivered", tone: "ok", where: "Delivered — signed by receiver", eta: "Delivered yesterday, 4:12 PM", partner: "Swift Last Mile", wh: "Vadodara Hub", lines: 3 },
+  TRK1029: { customer: "Shree Auto Spares", stage: 0, status: "Delayed — stock-out", tone: "bad", where: "Waiting: SKU WM-2210 out of stock", eta: "Revised: in 2 days", partner: "Not yet assigned", wh: "Vadodara Hub", lines: 9, stuck: true },
+  TRK1030: { customer: "Patel Wholesale Mart", stage: 3, status: "Dispatched", tone: "info", where: "Left dock 2, vehicle GJ-06-XX-4821", eta: "Today, 8:00 PM", partner: "BlueArrow Carriers", wh: "Vadodara Hub", lines: 31 }
+};
+
+/* ---------- Toast ---------- */
+let toastTimer;
+function toast(msg) {
+  const t = $("#toast"); t.textContent = msg; t.classList.add("is-visible");
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("is-visible"), 3200);
+}
+
+/* ---------- Count-up animation ---------- */
+function countUp(el, to, suffix = "", decimals = 0) {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) { el.textContent = (decimals ? to.toFixed(decimals) : fmt(to)) + suffix; return; }
+  const start = performance.now(), dur = 700;
+  (function step(now) {
+    const p = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - p, 3), v = to * e;
+    el.textContent = (decimals ? v.toFixed(decimals) : fmt(v)) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  })(start);
+}
+
+/* ---------- Sparkline ---------- */
+function spark(values, color) {
+  const w = 84, h = 30, min = Math.min(...values), max = Math.max(...values) || 1;
+  const pts = values.map((v, i) => `${(i / (values.length - 1)) * w},${h - 3 - ((v - min) / (max - min || 1)) * (h - 6)}`).join(" ");
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+/* ---------- Dashboard: KPIs ---------- */
+function renderKPIs(range) {
+  const slice = DAYS.slice(-range), prev = DAYS.slice(-range * 2, -range);
+  const sum = (a, k) => a.reduce((s, x) => s + x[k], 0);
+  const rec = sum(slice, "received"), dis = sum(slice, "dispatched");
+  const onTime = Math.round(slice.reduce((s, x) => s + x.onTime, 0) / slice.length * 10) / 10;
+  const recPrev = prev.length ? sum(prev, "received") : rec * 0.94;
+  const delta = ((rec - recPrev) / recPrev * 100);
+  const backlog = rec - dis;
+  const kpis = [
+    { label: "Inventory on hand", val: 48620, suf: "", sub: "units · 3,214 SKUs", trend: "flat", tt: "▬ stable", color: "var(--blue-600)", cls: "", data: [44,45,47,46,48,48,49] },
+    { label: "Orders received", val: rec, suf: "", sub: "", trend: delta >= 0 ? "up" : "down", tt: `${delta >= 0 ? "▲" : "▼"} ${Math.abs(delta).toFixed(1)}% vs previous`, color: "var(--blue-600)", cls: "", data: slice.map(d => d.received) },
+    { label: "Orders dispatched", val: dis, suf: "", sub: "", trend: backlog > 0 ? "down" : "up", tt: backlog > 0 ? `${backlog} still open` : "backlog cleared", color: "var(--amber-500)", cls: "kpi--amber", data: slice.map(d => d.dispatched) },
+    { label: "Stock-out SKUs", val: STOCK.filter(s => s.onHand === 0).length * 6, suf: "", sub: "items at zero", trend: "down", tt: "▲ 4 vs last week", color: "var(--bad)", cls: "kpi--bad", data: [10,12,11,14,15,16,18] },
+    { label: "Warehouse utilisation", val: 78, suf: "%", sub: "", trend: "flat", tt: "target 70–85%", color: "var(--ok)", cls: "kpi--ok", data: [70,72,74,75,77,78,78] },
+    { label: "On-time dispatch", val: onTime, suf: "%", dec: 1, sub: "", trend: onTime >= 90 ? "up" : "down", tt: onTime >= 90 ? "meets 90% target" : "below 90% target", color: onTime >= 90 ? "var(--ok)" : "var(--warn)", cls: onTime >= 90 ? "kpi--ok" : "kpi--warn", data: slice.map(d => d.onTime) }
+  ];
+  $("#kpiGrid").innerHTML = kpis.map((k, i) => `
+    <article class="kpi ${k.cls}">
+      <div class="kpi__label">${k.label}</div>
+      <div class="kpi__value"><span data-k="${i}">0</span>${k.sub ? `<small>${k.sub}</small>` : ""}</div>
+      <span class="kpi__trend kpi__trend--${k.trend}">${k.tt}</span>
+      ${spark(k.data, k.color)}
+    </article>`).join("");
+  kpis.forEach((k, i) => countUp($(`[data-k="${i}"]`), k.val, k.suf, k.dec || 0));
+  $("#chartRange").textContent = `Last ${range} days`;
+}
+
+/* ---------- Dashboard: main combo chart (SVG) ---------- */
+function renderChart(range) {
+  const data = DAYS.slice(-range), svg = $("#mainChart");
+  const W = 700, H = 260, m = { t: 14, r: 40, b: 30, l: 38 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const maxV = Math.ceil(Math.max(...data.map(d => d.received)) / 10) * 10;
+  const y = v => m.t + ih - (v / maxV) * ih;
+  const y2 = v => m.t + ih - ((v - 60) / 40) * ih; /* on-time axis 60–100 */
+  const step = iw / data.length, bw = Math.max(2, Math.min(18, step * 0.34));
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  let g = "";
+  for (let i = 0; i <= 4; i++) {
+    const v = (maxV / 4) * i, yy = y(v);
+    g += `<line class="gridline" x1="${m.l}" x2="${W - m.r}" y1="${yy}" y2="${yy}"/><text x="${m.l - 6}" y="${yy + 4}" text-anchor="end">${Math.round(v)}</text>`;
+    g += `<text x="${W - m.r + 6}" y="${yy + 4}">${60 + i * 10}%</text>`;
+  }
+  const every = range > 14 ? 3 : range > 7 ? 2 : 1;
+  data.forEach((d, i) => {
+    const cx = m.l + step * i + step / 2;
+    g += `<rect class="bar-a" x="${cx - bw - 1}" y="${y(d.received)}" width="${bw}" height="${m.t + ih - y(d.received)}" rx="2"><title>${d.label}: ${d.received} received</title></rect>`;
+    g += `<rect class="bar-b" x="${cx + 1}" y="${y(d.dispatched)}" width="${bw}" height="${m.t + ih - y(d.dispatched)}" rx="2"><title>${d.label}: ${d.dispatched} dispatched</title></rect>`;
+    if (i % every === 0) g += `<text x="${cx}" y="${H - 10}" text-anchor="middle">${d.label}</text>`;
+  });
+  const line = data.map((d, i) => `${m.l + step * i + step / 2},${y2(d.onTime)}`).join(" ");
+  g += `<polyline class="line-c" points="${line}"/>`;
+  if (range <= 14) data.forEach((d, i) => { g += `<circle class="dot-c" cx="${m.l + step * i + step / 2}" cy="${y2(d.onTime)}" r="3.5"><title>${d.label}: ${d.onTime}% on time</title></circle>`; });
+  svg.innerHTML = g;
+}
+
+/* ---------- Dashboard: range filter ---------- */
+function setRange(range) {
+  $$(".segmented button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.range === range)));
+  renderKPIs(range); renderChart(range);
+}
+$$(".segmented button").forEach(b => b.addEventListener("click", () => setRange(+b.dataset.range)));
+
+/* ---------- Dashboard: zones, bin map, alerts, stock table ---------- */
+function renderZones() {
+  $("#zoneList").innerHTML = ZONES.map(z => {
+    const c = z.pct > 90 ? "var(--amber-500)" : "var(--blue-600)";
+    return `<li><span>${z.name}</span><span class="meter"><i style="--w:${z.pct}%;--m:${c}"></i></span><strong>${z.pct}%</strong></li>`;
+  }).join("");
+}
+
+function renderBinMap() {
+  const r = rng(7), cols = 20, rows = 8, map = $("#binmap"); let html = "";
+  map.style.setProperty("--cols", cols);
+  const bins = [];
+  for (let row = 0; row < rows; row++) for (let c = 0; c < cols; c++) {
+    const aisle = String.fromCharCode(65 + Math.floor(row / 2) * 1 + (row % 2 ? 0 : 0));
+    const x = r(); let occ = x < .14 ? 0 : x < .27 ? 1 : x < .45 ? 2 : x < .72 ? 3 : x < .93 ? 4 : 5;
+    if (r() > .985) occ = "x";
+    const id = `${String.fromCharCode(65 + row)}-${String(c + 1).padStart(2, "0")}`;
+    bins.push({ id, occ });
+    html += `<button class="bin" type="button" data-occ="${occ}" data-id="${id}" aria-label="Bin ${id}"></button>`;
+  }
+  map.innerHTML = html;
+  const label = { 0: "Empty", 1: "Under 25% full", 2: "25–50% full", 3: "50–75% full", 4: "75–95% full", 5: "Over 95% full", x: "Blocked for maintenance" };
+  const show = b => {
+    const id = b.dataset.id, o = b.dataset.occ;
+    const sku = o === "0" ? "none" : "WM-" + (1000 + Math.floor(rng(id.charCodeAt(0) * 31 + +id.slice(2))() * 6000));
+    $("#binReadout").innerHTML = `<strong>Bin ${id}</strong> · ${label[o]} · SKU: ${sku}`;
+  };
+  map.addEventListener("mouseover", e => { const b = e.target.closest(".bin"); if (b) show(b); });
+  map.addEventListener("focusin", e => { const b = e.target.closest(".bin"); if (b) show(b); });
+  map.addEventListener("click", e => { const b = e.target.closest(".bin"); if (b) show(b); });
+}
+
+function renderAlerts() {
+  $("#alertList").innerHTML = ALERTS.map(a => `
+    <li><span class="status status--${a.lvl}">${a.lvl === "bad" ? "High" : "Medium"}</span>
+    <div><b>${a.t}</b><span class="card__sub">${a.d}</span></div><time>${a.when} ago</time></li>`).join("");
+  $("#alertCount").textContent = `${ALERTS.length} open`;
+}
+
+function renderStock() {
+  $("#stockTable").innerHTML = STOCK.map(s => {
+    const st = s.onHand === 0 ? ["bad", "Stock-out"] : s.onHand < s.reorder * .5 ? ["warn", "Critical low"] : ["info", "Below reorder"];
+    return `<tr><td><strong>${s.sku}</strong></td><td>${s.item}</td><td>${s.zone}</td><td class="num">${fmt(s.onHand)}</td><td class="num">${fmt(s.reorder)}</td><td><span class="status status--${st[0]}">${st[1]}</span></td></tr>`;
+  }).join("");
+}
+
+/* ---------- Hero control tower ---------- */
+function renderTower() {
+  const items = [
+    ["Docks active", "4 of 6"], ["Orders in picking", "212"], ["Trucks at gate", "3"],
+    ["Open exceptions", `${ALERTS.length}`], ["Next cut-off", "4:00 PM"]
+  ];
+  $("#towerList").innerHTML = items.map(([a, b]) => `<li><span>${a}</span><strong>${b}</strong></li>`).join("");
+}
+
+/* ---------- Business feature: shipment tracker ---------- */
+function renderTrack(id) {
+  const o = ORDERS[id], box = $("#trackResult");
+  const steps = STAGES.map((s, i) => {
+    const cls = i < o.stage || (o.stage === 4 && i === 4) ? "done" : i === o.stage ? (o.stuck ? "current stuck" : "current") : "";
+    return `<li class="${cls}">${s}</li>`;
+  }).join("");
+  box.innerHTML = `
+    <div class="row" style="justify-content:space-between"><h3 style="margin:0">${id}</h3><span class="status status--${o.tone}">${o.status}</span></div>
+    <ol class="timeline" aria-label="Order progress">${steps}</ol>
+    <dl class="detail-grid">
+      <div><dt>Customer</dt><dd>${o.customer}</dd></div>
+      <div><dt>Current location</dt><dd>${o.where}</dd></div>
+      <div><dt>Expected delivery</dt><dd>${o.eta}</dd></div>
+      <div><dt>Delivery partner</dt><dd>${o.partner}</dd></div>
+      <div><dt>Warehouse</dt><dd>${o.wh}</dd></div>
+      <div><dt>Order lines</dt><dd>${o.lines}</dd></div>
+    </dl>
+    <p class="card__sub">Need help? <a href="mailto:preetam.devanda_mba25@gsv.ac.in?subject=Order%20${id}">Email the dispatch desk</a> or call <a href="tel:+917610845387">+91 7610845387</a>.</p>`;
+}
+function doTrack(raw) {
+  const id = raw.trim().toUpperCase(), err = $("#orderErr"), input = $("#orderId");
+  input.value = id; input.removeAttribute("aria-invalid"); err.textContent = "";
+  if (!id) { err.textContent = "Enter an order ID such as TRK1025."; input.setAttribute("aria-invalid", "true"); $("#trackResult").innerHTML = ""; return; }
+  if (!ORDERS[id]) {
+    err.textContent = `No order found for ${id}. Check the ID or try ${Object.keys(ORDERS)[0]}.`;
+    input.setAttribute("aria-invalid", "true"); $("#trackResult").innerHTML = ""; return;
+  }
+  renderTrack(id);
+}
+$("#trackForm").addEventListener("submit", e => { e.preventDefault(); doTrack($("#orderId").value); });
+$("#sampleChips").innerHTML = Object.keys(ORDERS).map(k => `<button type="button" class="chip" data-id="${k}">${k}</button>`).join("");
+$("#sampleChips").addEventListener("click", e => { const c = e.target.closest(".chip"); if (c) doTrack(c.dataset.id); });
+$("#quickSearch").addEventListener("keydown", e => {
+  if (e.key !== "Enter") return;
+  e.preventDefault(); location.hash = "#tracker"; doTrack(e.target.value); e.target.value = "";
+});
+
+/* ---------- Enquiry form (validates, then opens email client) ---------- */
+(function enquiry() {
+  const form = $("#enquiryForm"), note = $("#formNote");
+  const rules = {
+    name: v => v.trim().length >= 2 || "Enter your full name.",
+    email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || "Enter a valid email like name@company.com.",
+    phone: v => !v || /^[+\d][\d\s-]{7,16}$/.test(v) || "Enter a valid phone number.",
+    message: v => v.trim().length >= 10 || "Tell us a little more (10 characters or more)."
+  };
+  form.addEventListener("submit", e => {
+    e.preventDefault(); let ok = true;
+    Object.keys(rules).forEach(k => {
+      const f = form.elements[k], res = rules[k](f.value), err = f.parentElement.querySelector(".error-text");
+      if (res !== true) { ok = false; err.textContent = res; f.setAttribute("aria-invalid", "true"); }
+      else { err.textContent = ""; f.removeAttribute("aria-invalid"); }
+    });
+    if (!ok) { note.className = "form-note form-note--bad is-visible"; note.textContent = "Please fix the highlighted fields and send again."; return; }
+    const d = Object.fromEntries(new FormData(form));
+    const body = `Name: ${d.name}\nEmail: ${d.email}\nPhone: ${d.phone || "-"}\nService: ${d.service}\nVolume: ${d.volume}\n\n${d.message}`;
+    location.href = `mailto:preetam.devanda_mba25@gsv.ac.in?subject=${encodeURIComponent("Warehouse enquiry: " + d.service)}&body=${encodeURIComponent(body)}`;
+    note.className = "form-note form-note--ok is-visible";
+    note.textContent = "Your email app is opening with the enquiry filled in. Press send there to submit.";
+    toast("Enquiry ready to send");
+  });
+  form.addEventListener("input", e => { if (e.target.hasAttribute("aria-invalid")) { e.target.removeAttribute("aria-invalid"); e.target.parentElement.querySelector(".error-text").textContent = ""; } });
+  $$("[data-service]").forEach(a => a.addEventListener("click", () => { $("#service").value = a.dataset.service; }));
+})();
+
+/* ---------- Shell: theme, mobile menu, scroll-spy, back-to-top ---------- */
+(function shell() {
+  const root = document.documentElement, saved = localStorage.getItem("ss-theme");
+  if (saved) root.dataset.theme = saved;
+  $("#themeBtn").addEventListener("click", () => {
+    const dark = root.dataset.theme === "dark" || (!root.dataset.theme && matchMedia("(prefers-color-scheme: dark)").matches);
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("ss-theme", root.dataset.theme); } catch (_) {}
+  });
+  const nav = $("#nav"), btn = $("#menuBtn");
+  btn.addEventListener("click", () => { const o = nav.classList.toggle("is-open"); btn.setAttribute("aria-expanded", o); });
+  nav.addEventListener("click", e => { if (e.target.tagName === "A") { nav.classList.remove("is-open"); btn.setAttribute("aria-expanded", "false"); } });
+
+  const links = $$(".nav a"), map = Object.fromEntries(links.map(a => [a.getAttribute("href").slice(1), a]));
+  const io = new IntersectionObserver(es => es.forEach(en => {
+    if (en.isIntersecting) { links.forEach(l => l.classList.remove("is-active")); map[en.target.id]?.classList.add("is-active"); }
+  }), { rootMargin: "-45% 0px -50% 0px" });
+  Object.keys(map).forEach(id => { const s = document.getElementById(id); if (s) io.observe(s); });
+
+  const top = $("#toTop");
+  addEventListener("scroll", () => top.classList.toggle("is-visible", scrollY > 700), { passive: true });
+  top.addEventListener("click", () => scrollTo({ top: 0 }));
+  $("#year").textContent = new Date().getFullYear();
+})();
+
+/* ---------- Init ---------- */
+renderTower(); renderZones(); renderBinMap(); renderAlerts(); renderStock(); setRange(7);
+
+</script>
+</body>
+</html>
